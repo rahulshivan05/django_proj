@@ -1,0 +1,106 @@
+{% load static %}
+{% load i18n %}
+{% load l10n %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+    <style type="text/css">
+      .dropdown:hover .dropdown-menu {
+        display: block;
+        margin-top: 0;
+      }
+    </style>
+
+    <title>{% block title %}{% endblock  %}</title>
+  </head>
+  <body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        {% if user.is_authenticated %}
+          <a href=""><img class="rounded-circle account-img" src="{{user.profile.image.url}}" height="50px" width="50px" title="{{user.get_full_name}}"></a>
+        {% else %}
+        <a class="navbar-brand" href="">Django</a>
+        {% endif %}
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Link</a>
+            </li>
+          </ul>
+          <form class="d-flex">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success " type="submit">Search</button>
+
+            {% if user.is_authenticated %}
+                <ul class="navbar-nav ml-auto mr-2">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Welcome {{request.user}}
+                        </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{% url 'accounts:logout' %}">Logout</a>
+                    </div>
+                    </li>
+                </ul>
+                 </div>
+                {% else %}
+                  <a class="btn btn-outline-primary mx-1" role='button' href="{% url 'accounts:login' %}">Login</a>                
+                {% endif %}
+          </form>
+        </div>
+      </div>
+    </nav>
+
+    {% comment %} Messages Strats here.... {% endcomment %}
+    {% if messages %}
+      {% for messages in messages %}
+      <div class="alert alert-{{messages.tags}} alert-dismissible fade show" role="alert">
+        <strong>Message: </strong> {{messages}}.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      {% endfor %}
+    {% endif %}
+
+
+
+  <div class="container mt-3">
+
+    {% block content %}{% endblock  %}
+  </div><br><br>
+  <footer class="container text-center" id="platform">Hello</footer><br><br>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+
+    <script>
+		var platform = document.getElementById('platform');
+
+		if (navigator.userAgent.match(/iPhone/i)){
+			platform.textContent = "You are using iPhone !!";
+		}
+		else if (navigator.userAgent.match(/iPad/i)){
+			platform.textContent = "You are using iPad !!";
+		}else if (screen.width <= 699) {
+			platform.textContent = "You are using Mobile";
+		}else if (navigator.userAgent.match(/Mac OS X/i)){
+			platform.textContent = "You are using Mac !!";
+		}
+		else{
+			platform.textContent = "You are using Windows !!";
+		}
+	</script>
+  </body>
+</html>

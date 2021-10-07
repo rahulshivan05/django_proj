@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Login
+{% endblock title %}
+
+{% block content %}
+{% if error_message %}
+	{{error_message}}
+{% endif %}
+<form action="" method="POST" class="ui form" enctype="multipart/form-data">
+	{% csrf_token %}
+	{{form.as_p}}
+	<button type="submit" class="ui positive button">Login</button>
+</form>
+{% endblock content %}
+

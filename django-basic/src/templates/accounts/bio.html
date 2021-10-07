@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}User Bio Page{% endblock  %}
+
+{% block content %}
+
+    <div class="content-section">
+        <div class="media">
+            <img class="rounded-circle account-img" src="{{user.profile.image.url}}" title="{{user.get_full_name}} profile image" height="150px" weight="150px">
+			<div class="media-body">
+				<h2 class="account-heading">{{user.username}}</h2>
+				<p class="text-secondary">Name: {{user.get_full_name}}</p>
+				<p class="text-secondary">Email: {{user.email}}</p>
+				<p class="border-right">Bio: {{user.profile.bio}}</p>
+			</div>
+		</div>
+		<a class="btn btn-primary" href="{% url 'accounts:profile' %}">Update Profile</a>
+		<a class="btn btn-primary" href="{% url 'accounts:logout' %}">Logout</a>
+    </div>
+
+{% endblock  %}
